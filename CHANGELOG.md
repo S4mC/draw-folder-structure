@@ -2,6 +2,34 @@
 
 All notable changes to the "Draw Folder Structure" extension will be documented in this file.
 
+## [1.5.0] - 2025-12-22
+
+### Changed
+
+- **Telemetry Removal**: Completely removed all telemetry and analytics functionality from the extension
+  - Removed Azure Application Insights dependency
+  - Removed telemetry service and all tracking code
+  - Removed environment variables related to telemetry
+  - Simplified extension with focus on core functionality
+- **Tree Structure Visualization**: Improved tree structure rendering logic
+  - Fixed prefix logic to correctly use `├──` for non-last items and `└──` for last items in each directory
+  - Improved detection of last items within parent directories for accurate tree formatting
+  - Enhanced folder and file prefix handling for better visual hierarchy
+
+### Fixed
+
+- **Exclusion Filtering**: Fixed issue where excluded folders' contents were still appearing in the structure
+  - Improved glob pattern matching to properly exclude all contents of excluded directories
+  - Fixed false positives where similar folder names were incorrectly excluded (e.g., `.git` excluding `.github`)
+  - Enhanced segment-based pattern matching for more precise exclusions
+
+### Removed
+
+- Azure Application Insights telemetry system
+- applicationinsights and dotenv dependencies
+- Telemetry service file and related code
+- Privacy-related documentation sections for telemetry
+
 ## [1.4.4] - 2024-12-19
 
 ### Added

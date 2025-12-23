@@ -94,7 +94,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext ts",
+    "test": "echo \"No tests found\""
   },
   "devDependencies": {
     "@types/mocha": "^10.0.1",
@@ -107,8 +108,6 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "applicationinsights": "^3.7.0",
-    "dotenv": "^17.0.1",
     "fast-glob": "^3.3.2",
     "ignore": "^6.0.2"
   }

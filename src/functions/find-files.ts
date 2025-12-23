@@ -41,6 +41,44 @@ export async function findFiles(
       })
       : filePaths;
 
+    // Additionally filter out any paths that are children of excluded directories
+    // This ensures that if a folder is excluded, all its contents are also excluded
+    filteredPaths = filteredPaths.filter((filePath) => {
+      const relativePath = relative(baseDir, filePath);
+      const pathParts = relativePath.split(sep);
+      
+      // Check if any parent folder in the path matches exclude patterns
+      for (let i = 0; i < pathParts.length; i++) {
+        const segment = pathParts[i];
+        
+        // Check against exclude patterns
+        for (const pattern of exclude) {
+          // Remove the **/ prefix if present
+          let cleanPattern = pattern.replace(/^\*\*\//, '');
+          
+          // If pattern ends with *, it's a prefix match
+          if (cleanPattern.endsWith('*')) {
+            const prefix = cleanPattern.slice(0, -1);
+            if (segment.startsWith(prefix)) {
+              return false;
+            }
+          } 
+          // If pattern contains *, convert to regex for that segment only
+          else if (cleanPattern.includes('*')) {
+            const regexPattern = '^' + cleanPattern.replace(/\*/g, '.*') + '$';
+            if (new RegExp(regexPattern).test(segment)) {
+              return false;
+            }
+          }
+          // Otherwise, exact match on the segment
+          else if (segment === cleanPattern) {
+            return false;
+          }
+        }
+      }
+      return true;
+    });
+
     // Custom sorting: for each directory level, ensure directories come before files.
     filteredPaths.sort((a, b) => {
       // Get the paths relative to the base directory.

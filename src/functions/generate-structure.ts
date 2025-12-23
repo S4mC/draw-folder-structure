@@ -1,5 +1,5 @@
 import { statSync } from 'fs';
-import { basename, resolve, sep } from 'path';
+import { basename, dirname, resolve, sep } from 'path';
 import { Style } from '../types/style';
 import { findFiles } from './find-files';
 import { getPrefix } from './get-prefix';
@@ -22,11 +22,24 @@ export async function generateStructure(
     respectGitignore  // Respect .gitignore if enabled
   );
 
+  // Build a map of parent directories to their last child index
+  const lastChildIndexMap = new Map<string, number>();
+  for (let i = items.length - 1; i >= 0; i--) {
+    const fullPath = resolve(items[i]);
+    const parentDir = dirname(fullPath);
+    if (!lastChildIndexMap.has(parentDir)) {
+      lastChildIndexMap.set(parentDir, i);
+    }
+  }
+
   // Iterate over each sorted item to build the structure.
   for (const [index, item] of items.entries()) {
     const fullPath = resolve(item); // Ensure full path
     const isFolder = statSync(fullPath).isDirectory();
-    const isLastItem = index === items.length - 1;
+    
+    // Determine if this is the last item in its parent directory
+    const parentDir = dirname(fullPath);
+    const isLastItem = lastChildIndexMap.get(parentDir) === index;
 
     // Calculate the depth (number of subdirectories) based on the relative path.
     const currentDepth = fullPath.split(sep).length - folderPath.split(sep).length;

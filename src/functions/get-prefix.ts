@@ -13,10 +13,33 @@ export const getPrefix: GetPrefixFunction = (
   isLastItem = false,
   isFile = false
 ) => {
-  const repeatStr = '  '.repeat(depth);
+  const repeatStr = '  '.repeat(depth + 1);
   let prefix;
 
   const folderPrefixes: Record<Style, string> = {
+    [Style.ClassicDashes]: `${repeatStr}├── `,
+    [Style.MinimalistDots]: `${repeatStr} • `,
+    [Style.EmojiFun]: `${repeatStr}📁 `,
+    [Style.EmojiMinimalist]: `${repeatStr}📁 `,
+    [Style.Arrows]: `${repeatStr}➜ `,
+    [Style.NestedCircles]: `${repeatStr}◉ `,
+    [Style.BoldBlocks]: `${repeatStr}■ `,
+    [Style.SlashSeparators]: `${repeatStr}/ `,
+    [Style.ChevronIndicators]: `${repeatStr}» `,
+    [Style.DotDashMix]: `${repeatStr}• `,
+    [Style.Triangles]: `${repeatStr}▶ `,
+    [Style.Zigzag]: `${repeatStr}↳ `,
+    [Style.PipesAndHyphens]: `${repeatStr}|- `,
+    [Style.NestedSquares]: `${repeatStr}■ `,
+    [Style.CirclesAndLines]: `${repeatStr}◯ `,
+    [Style.SparklesDesing]: `${repeatStr}📁✨ `,
+    [Style.TrailDesign]: `${repeatStr}👣📁 `,
+    [Style.FloralDesign]: `${repeatStr}🌸📁 `,
+    [Style.GalacticDesign]: `${repeatStr}🌌📁 `,
+    [Style.EmojiDashes]: `${repeatStr}├── 📁 `,
+  };
+
+  const folderLastPrefixes: Record<Style, string> = {
     [Style.ClassicDashes]: `${repeatStr}└── `,
     [Style.MinimalistDots]: `${repeatStr} • `,
     [Style.EmojiFun]: `${repeatStr}📁 `,
@@ -36,7 +59,7 @@ export const getPrefix: GetPrefixFunction = (
     [Style.TrailDesign]: `${repeatStr}👣📁 `,
     [Style.FloralDesign]: `${repeatStr}🌸📁 `,
     [Style.GalacticDesign]: `${repeatStr}🌌📁 `,
-    [Style.EmojiDashes]: `${repeatStr}└── 📁`,
+    [Style.EmojiDashes]: `${repeatStr}└── 📁 `,
   };
 
   const filePrefixes: Record<Style, string> = {
@@ -62,7 +85,7 @@ export const getPrefix: GetPrefixFunction = (
     [Style.EmojiDashes]: `${repeatStr}├── `,
   };
 
-  const lastItemPrefixes: Record<Style, string> = {
+  const fileLastPrefixes: Record<Style, string> = {
     [Style.ClassicDashes]: `${repeatStr}└── `,
     [Style.MinimalistDots]: `${repeatStr}• `,
     [Style.EmojiFun]: `${repeatStr}📄 `,
@@ -86,9 +109,9 @@ export const getPrefix: GetPrefixFunction = (
   };
 
   if (isFile) {
-    prefix = isLastItem ? lastItemPrefixes[style] : filePrefixes[style];
+    prefix = isLastItem ? fileLastPrefixes[style] : filePrefixes[style];
   } else {
-    prefix = isLastItem ? lastItemPrefixes[style] : folderPrefixes[style];
+    prefix = isLastItem ? folderLastPrefixes[style] : folderPrefixes[style];
   }
 
   return repeatStr + prefix;
