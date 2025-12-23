@@ -1,22 +1,29 @@
 {
-  "name": "drawfolderstructure",
-  "displayName": "Draw Folder Structure",
+  "name": "drawfolderstructure-s4mu31",
+  "displayName": "Draw Structure",
   "description": "Generate markdown representations of your folder and file structure",
-  "version": "1.4.5",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/krivoox/draw-folder-structure"
-  },
+  "publisher": "s4mu31",
+  "version": "1.5.0",
+  "license": "MIT",
   "icon": "src/assets/drawstructurelogo.png",
   "engines": {
     "vscode": "^1.81.0"
   },
-  "publisher": "jmkrivocapich",
-  "author": {
-    "name": "JKrivoox"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/S4mC/draw-folder-structure"
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "markdown",
+    "folder structure",
+    "tree",
+    "documentation",
+    "visualization",
+    "file explorer",
+    "project structure"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
@@ -42,9 +49,9 @@
           "type": "array",
           "default": [
             "**/node_modules",
-            "**/*.git",
+            "**/.git",
             "**/dist",
-            "**/*.next",
+            "**/.next",
             "**/out"
           ],
           "description": "File and folder patterns to exclude when generating the Markdown structure."
